@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f7f3eb">
+  <meta name="description" content="巴黎报恩寺中法双语网站。了解课程、活动与行事历。">
+  <title>巴黎报恩寺 · Temple Bao’en Paris</title>
+  <link rel="stylesheet" href="./styles.css">
+  <script src="./app.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#main" data-copy="跳到主要内容|Aller au contenu">跳到主要内容</a>
+  <header class="header" id="top">
+    <div class="header-inner">
+      <a class="brand" href="#top" aria-label="巴黎报恩寺 · Temple Bao’en Paris">
+        <span class="seal" aria-hidden="true">報恩<br>精舍</span>
+        <span class="brand-names"><strong>巴黎报恩寺</strong><span>TEMPLE BAO’EN · PARIS</span></span>
+      </a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="navigation" data-copy="菜单|Menu">菜单</button>
+      <nav id="navigation" aria-label="主导航">
+        <a href="#about" data-copy="关于我们|Qui sommes-nous">关于我们</a>
+        <details class="dropdown">
+          <summary><span data-copy="课程|Programme">课程</span><span class="chevron" aria-hidden="true"></span></summary>
+          <div class="dropdown-panel">
+            <a href="#abhidharma" data-copy="阿毗达磨与生活|L’Abhidharma et la vie">阿毗达磨与生活</a>
+            <a href="#chinese" data-copy="中文教学|Cours de chinois">中文教学</a>
+          </div>
+        </details>
+        <details class="dropdown">
+          <summary><span data-copy="活动|Activités">活动</span><span class="chevron" aria-hidden="true"></span></summary>
+          <div class="dropdown-panel">
+            <a href="#candlelight" data-copy="烛光之夜|Soirée aux bougies">烛光之夜</a>
+            <a href="#visits" data-copy="养老院探访|Visites en maison de retraite">养老院探访</a>
+            <a href="#concerts" data-copy="音乐会|Concerts">音乐会</a>
+          </div>
+        </details>
+        <a href="#contact" data-copy="联系我们|Contact">联系我们</a>
+      </nav>
+      <div class="languages" role="group" aria-label="语言 · Langue">
+        <button type="button" data-lang="zh" lang="zh-Hans" aria-pressed="true">中文</button>
+        <span aria-hidden="true"></span>
+        <button type="button" data-lang="fr" lang="fr" aria-pressed="false">FR</button>
+      </div>
+    </div>
+  </header>
+  <main id="main" class="wrap">
+    <section class="hero" aria-label="巴黎报恩寺">
+      <img class="hero-image" src="./assets/temple.jpg" alt="" fetchpriority="high">
+      <div class="hero-shade"></div>
+      <div class="hero-content" aria-live="polite">
+        <p class="eyebrow hero-eyebrow" id="hero-label">TEMPLE BAO’EN · PARIS</p>
+        <h1 id="hero-title">巴黎报恩寺</h1>
+        <p id="hero-description">在巴黎，一起学习佛法、交流文化，也为日常留一刻安静。</p>
+        <a class="button button-cream" id="hero-link" href="#about"><span id="hero-action">认识报恩寺</span><span aria-hidden="true">↗</span></a>
+      </div>
+      <div class="hero-controls">
+        <div class="slide-dots" role="group" aria-label="轮播">
+          <button type="button" data-slide="0" aria-label="巴黎报恩寺" aria-current="true"></button>
+          <button type="button" data-slide="1" aria-label="课程"></button>
+          <button type="button" data-slide="2" aria-label="活动"></button>
+        </div>
+        <button class="round" type="button" data-step="-1" aria-label="上一张">←</button>
+        <button class="round" type="button" data-step="1" aria-label="下一张">→</button>
+      </div>
+    </section>
+
+    <section id="calendar" class="calendar-section section">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow" data-copy="AGENDA DU TEMPLE|寺院活动">AGENDA DU TEMPLE</p>
+          <h2 data-copy="行事历|Agenda du temple">行事历</h2>
+        </div>
+      </div>
+      <div class="calendar-layout">
+        <div class="calendar-card">
+          <div class="month-bar">
+            <h3 id="month" aria-live="polite"></h3>
+            <div class="month-actions">
+              <button type="button" class="round" data-month="-1" aria-label="上个月">←</button>
+              <button type="button" class="round" data-month="1" aria-label="下个月">→</button>
+            </div>
+          </div>
+          <div class="week" id="week" aria-hidden="true"></div>
+          <div class="days" id="days"></div>
+        </div>
+        <div class="agenda-card" aria-live="polite">
+          <span class="agenda-icon" aria-hidden="true"></span>
+          <p class="eyebrow" id="selected-date"></p>
+          <h3 data-copy="活动安排|Rencontres à venir">活动安排</h3>
+          <div id="agenda-events"></div>
+          <a class="text-link" href="#activities"><span data-copy="探索寺院活动|Découvrir les activités">探索寺院活动</span><span aria-hidden="true">↗</span></a>
+        </div>
+      </div>
+    </section>
+
+    <section id="about" class="section about">
+      <div>
+        <p class="eyebrow" data-copy="À PROPOS|关于我们">À PROPOS</p>
+        <h2 data-copy="关于报恩寺|Le temple Bao’en">关于报恩寺</h2>
+      </div>
+      <p data-copy="报恩寺的网站汇集佛法学习、中文教学与社区活动。你可以在这里浏览课程主题，了解活动形式，并通过行事历查看之后公布的安排。|Retrouvez ici les thèmes des enseignements bouddhistes, les cours de chinois et les activités du temple. L’agenda rassemble les dates au fur et à mesure de leur publication.">报恩寺的网站汇集佛法学习、中文教学与社区活动。你可以在这里浏览课程主题，了解活动形式，并通过行事历查看之后公布的安排。</p>
+    </section>
+
+    <section id="programme" class="section listing">
+      <p class="eyebrow" data-copy="PROGRAMME|课程">PROGRAMME</p>
+      <h2 data-copy="课程|Programme">课程</h2>
+      <div class="entries">
+        <article id="abhidharma">
+          <h3 data-copy="阿毗达磨与生活|L’Abhidharma et la vie">阿毗达磨与生活</h3>
+          <p data-copy="从佛教对心与经验的观察出发，探讨如何理解日常生活中的感受与习惯。|Une exploration du regard bouddhiste sur l’esprit, les ressentis et nos habitudes au quotidien.">从佛教对心与经验的观察出发，探讨如何理解日常生活中的感受与习惯。</p>
+        </article>
+        <article id="chinese">
+          <h3 data-copy="中文教学|Cours de chinois">中文教学</h3>
+          <p data-copy="从日常表达、阅读与汉字入手，在学习语言的同时接触中华文化。|S’initier aux expressions courantes, à la lecture et aux caractères chinois pour explorer la culture par la langue.">从日常表达、阅读与汉字入手，在学习语言的同时接触中华文化。</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="activities" class="section listing">
+      <p class="eyebrow" data-copy="ACTIVITÉS|活动">ACTIVITÉS</p>
+      <h2 data-copy="寺院活动|Activités du temple">寺院活动</h2>
+      <div class="entries three">
+        <article id="candlelight">
+          <h3 data-copy="烛光之夜|Soirée aux bougies">烛光之夜</h3>
+          <p data-copy="在烛光中静坐，为自己留一段安静的时间。|Un moment de silence et de recueillement à la lueur des bougies.">在烛光中静坐，为自己留一段安静的时间。</p>
+        </article>
+        <article id="visits">
+          <h3 data-copy="养老院探访|Visites en maison de retraite">养老院探访</h3>
+          <p data-copy="通过陪伴和交谈，与长者共度一段时光。|Des visites pour échanger et passer du temps avec les résidents.">通过陪伴和交谈，与长者共度一段时光。</p>
+        </article>
+        <article id="concerts">
+          <h3 data-copy="音乐会|Concerts">音乐会</h3>
+          <p data-copy="在现场音乐中相聚，也在聆听中与彼此交流。|Des rencontres autour de la musique jouée en direct et du plaisir d’écouter ensemble.">在现场音乐中相聚，也在聆听中与彼此交流。</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="contact" class="section contact">
+      <div>
+        <p class="eyebrow" data-copy="CONTACT|联系">CONTACT</p>
+        <h2 data-copy="联系我们|Nous contacter">联系我们</h2>
+      </div>
+      <p data-copy="探访地址、开放时间与联络方式待寺院确认后公布。|L’adresse, les horaires de visite et les coordonnées seront publiés après confirmation par le temple.">探访地址、开放时间与联络方式待寺院确认后公布。</p>
+    </section>
+  </main>
+  <footer class="footer">
+    <div class="wrap footer-inner">
+      <span>© <span id="year"></span> <span data-copy="巴黎报恩寺|Temple Bao’en Paris">巴黎报恩寺</span></span>
+      <a href="#top"><span data-copy="回到顶部|Retour en haut">回到顶部</span> ↑</a>
+    </div>
+  </footer>
+</body>
+</html>
