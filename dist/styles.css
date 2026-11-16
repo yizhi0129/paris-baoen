@@ -154,12 +154,16 @@ details[open] .chevron { transform: translateY(1px) rotate(225deg); }
 .agenda-icon::after { position: absolute; content: ""; left: 0; right: 0; top: 6px; border-top: 1px solid var(--accent); }
 .agenda-card h3, .entries h3 { font-size: 33px; margin: 8px 0 10px; }
 :lang(zh-Hans) :is(.agenda-card, .entries) h3 { font-size: 24px; }
-.agenda-card p:not(.eyebrow), .entries p, .about > p, .contact > p { color: var(--muted); }
+.agenda-card p:not(.eyebrow), .entries p, .about-introductions p, .contact > p { color: var(--muted); }
 .agenda-card ul { padding-left: 18px; margin: 0; }
 .text-link { display: inline-flex; gap: 20px; align-items: center; border-bottom: 1px solid #ae8c7b; padding-bottom: 3px; margin-top: 24px; color: var(--accent); font-size: 14px; font-weight: 600; }
 .text-link:hover { border-color: currentColor; }
-.about, .contact { display: grid; grid-template-columns: 1fr 1fr; align-items: end; gap: 24px; }
-.about > p, .contact > p { max-width: 490px; }
+.about-introductions, .contact { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
+.about-introductions { margin-top: 28px; gap: clamp(22px, 4vw, 60px); }
+.about-introductions h3 { font-size: 31px; margin-bottom: 12px; color: var(--accent); }
+:lang(zh-Hans) .about-introductions h3 { font-size: 23px; }
+.contact { align-items: end; }
+.contact > p { max-width: 490px; }
 .entries { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; margin-top: 27px; }
 .entries.three { grid-template-columns: repeat(3, 1fr); }
 .entries article { border: 1px solid var(--border); padding: 22px; border-radius: 16px; background: var(--card); }
@@ -190,7 +194,7 @@ details[open] .chevron { transform: translateY(1px) rotate(225deg); }
   .hero-image { object-position: center 52%; }
   .hero-controls { grid-row: 3; justify-content: flex-end; padding: 0; }
   .section { padding-block: 40px; }
-  .calendar-layout, .about, .contact, .entries, .entries.three { grid-template-columns: 1fr; }
+  .calendar-layout, .about-introductions, .contact, .entries, .entries.three { grid-template-columns: 1fr; }
 }
 @media (max-width: 360px) {
   .header-inner { gap: 8px; }
