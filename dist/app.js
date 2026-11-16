@@ -1,7 +1,7 @@
 const slides = [
   {
-    zh: ['TEMPLE BAO’EN · PARIS', '巴黎报恩寺', '在巴黎，一起学习佛法、交流文化，也为日常留一刻安静。', '认识报恩寺'],
-    fr: ['巴黎报恩寺', 'Temple Bao’en', 'À Paris, étudier le bouddhisme, partager des cultures et trouver un moment de calme.', 'Découvrir le temple'],
+    zh: ['TEMPLE BAO’EN · PARIS', '欢迎来到\n巴黎报恩寺', '在巴黎，为自己留一点时间。来一起学习佛法、聊聊生活，也在彼此的陪伴中歇一歇。', '认识报恩寺'],
+    fr: ['巴黎报恩寺', 'Bienvenue au\ntemple Bao’en', 'À Paris, prenez un moment pour vous. Venez découvrir le bouddhisme, échanger et faire une pause ensemble.', 'Découvrir le temple'],
     href: '#about',
   },
   {
@@ -72,7 +72,7 @@ function renderSlide() {
   byId('hero-link').href = current.href;
   document.querySelector('.hero').dataset.slide = slide;
   dots.forEach((dot, index) => {
-    dot.setAttribute('aria-label', slides[index][language][1]);
+    dot.setAttribute('aria-label', slides[index][language][1].replace('\n', ' '));
     if (index === slide) dot.setAttribute('aria-current', 'true');
     else dot.removeAttribute('aria-current');
   });

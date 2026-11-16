@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#f7f3eb">
+  <meta name="theme-color" content="#fffaf2">
   <meta name="description" content="巴黎报恩寺中法双语网站。了解课程、活动与行事历。">
   <title>巴黎报恩寺 · Temple Bao’en Paris</title>
   <link rel="stylesheet" href="./styles.css">
@@ -14,7 +14,7 @@
   <header class="header" id="top">
     <div class="header-inner">
       <a class="brand" href="#top" aria-label="巴黎报恩寺 · Temple Bao’en Paris">
-        <span class="seal" aria-hidden="true">報恩<br>精舍</span>
+        <span class="logo-mark"><img src="./assets/baoen-logo.jpg" alt="" width="1280" height="1280"></span>
         <span class="brand-names"><strong>巴黎报恩寺</strong><span>TEMPLE BAO’EN · PARIS</span></span>
       </a>
       <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="navigation" data-copy="菜单|Menu">菜单</button>
@@ -46,13 +46,11 @@
   </header>
   <main id="main" class="wrap">
     <section class="hero" aria-label="巴黎报恩寺">
-      <img class="hero-image" src="./assets/temple.jpg" alt="" fetchpriority="high">
-      <div class="hero-shade"></div>
       <div class="hero-content" aria-live="polite">
         <p class="eyebrow hero-eyebrow" id="hero-label">TEMPLE BAO’EN · PARIS</p>
-        <h1 id="hero-title">巴黎报恩寺</h1>
-        <p id="hero-description">在巴黎，一起学习佛法、交流文化，也为日常留一刻安静。</p>
-        <a class="button button-cream" id="hero-link" href="#about"><span id="hero-action">认识报恩寺</span><span aria-hidden="true">↗</span></a>
+        <h1 id="hero-title">欢迎来到<br>巴黎报恩寺</h1>
+        <p id="hero-description">在巴黎，为自己留一点时间。来一起学习佛法、聊聊生活，也在彼此的陪伴中歇一歇。</p>
+        <a class="button" id="hero-link" href="#about"><span id="hero-action">认识报恩寺</span><span aria-hidden="true">↗</span></a>
       </div>
       <div class="hero-controls">
         <div class="slide-dots" role="group" aria-label="轮播">
@@ -62,6 +60,9 @@
         </div>
         <button class="round" type="button" data-step="-1" aria-label="上一张">←</button>
         <button class="round" type="button" data-step="1" aria-label="下一张">→</button>
+      </div>
+      <div class="hero-media">
+        <img class="hero-image" src="./assets/tea-room.jpg" alt="" width="1500" height="1125" fetchpriority="high">
       </div>
     </section>
 
@@ -146,7 +147,10 @@
   </main>
   <footer class="footer">
     <div class="wrap footer-inner">
-      <span>© <span id="year"></span> <span data-copy="巴黎报恩寺|Temple Bao’en Paris">巴黎报恩寺</span></span>
+      <div class="footer-brand">
+        <span class="logo-mark"><img src="./assets/baoen-logo.jpg" alt="" width="1280" height="1280" loading="lazy"></span>
+        <span>© <span id="year"></span> <span data-copy="巴黎报恩寺|Temple Bao’en Paris">巴黎报恩寺</span></span>
+      </div>
       <a href="#top"><span data-copy="回到顶部|Retour en haut">回到顶部</span> ↑</a>
     </div>
   </footer>
