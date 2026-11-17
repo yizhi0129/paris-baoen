@@ -1,36 +1,14 @@
-const slides = [
-  {
-    zh: ['TEMPLE BAO’EN · PARIS', '欢迎来到\n巴黎报恩寺', '在巴黎，为自己留一点时间。来一起学习佛法、聊聊生活，也在彼此的陪伴中歇一歇。', '认识报恩寺'],
-    fr: ['巴黎报恩寺', 'Bienvenue au\ntemple Bao’en', 'À Paris, prenez un moment pour vous. Venez découvrir le bouddhisme, échanger et faire une pause ensemble.', 'Découvrir le temple'],
-    href: '#about',
-  },
-  {
-    zh: ['PROGRAMME', '从学习开始', '了解阿毗达磨与生活、中文教学两项课程。', '浏览课程'],
-    fr: ['课程', 'Le plaisir d’apprendre', 'Découvrez les enseignements sur l’Abhidharma et les cours de chinois.', 'Voir le programme'],
-    href: '#programme',
-  },
-  {
-    zh: ['ACTIVITÉS', '相聚在巴黎', '看看烛光之夜、养老院探访和音乐会。', '浏览活动'],
-    fr: ['寺院活动', 'Se retrouver à Paris', 'Des rencontres à la lueur des bougies, en maison de retraite ou autour d’un concert.', 'Voir les activités'],
-    href: '#activities',
-  },
-];
-
 // Add confirmed events as { date: 'YYYY-MM-DD', time: 'HH:mm', zh: '…', fr: '…' }.
 const events = [];
 
 const byId = (id) => document.getElementById(id);
 const languageButtons = document.querySelectorAll('[data-lang]');
-const dots = [...document.querySelectorAll('[data-slide]')];
 const navigation = byId('navigation');
 const menuToggle = document.querySelector('.menu-toggle');
 const dropdowns = [...navigation.querySelectorAll('details')];
 const localizedLabels = [
+  ['.hero-controls', '首图轮播', 'Diaporama d’accueil'],
   ['nav', '主导航', 'Navigation principale'],
-  ['.hero', '巴黎报恩寺', 'Temple Bao’en'],
-  ['.slide-dots', '轮播', 'Diaporama'],
-  ['[data-step="-1"]', '上一张', 'Diapositive précédente'],
-  ['[data-step="1"]', '下一张', 'Diapositive suivante'],
   ['[data-month="-1"]', '上个月', 'Mois précédent'],
   ['[data-month="1"]', '下个月', 'Mois suivant'],
 ];
@@ -43,7 +21,6 @@ const today = new Date(Date.UTC(parisPart('year'), parisPart('month') - 1, paris
 const dateKey = (date) => date.toISOString().slice(0, 10);
 let selected = today;
 let month = monthStart(today);
-let slide = 0;
 let language = 'zh';
 
 try {
@@ -60,22 +37,6 @@ function formatDate(date, options) {
   return new Intl.DateTimeFormat(language === 'zh' ? 'zh-CN' : 'fr-FR', {
     ...options, timeZone: 'UTC',
   }).format(date);
-}
-
-function renderSlide() {
-  const current = slides[slide];
-  const [label, title, description, action] = current[language];
-  byId('hero-label').textContent = label;
-  byId('hero-title').textContent = title;
-  byId('hero-description').textContent = description;
-  byId('hero-action').textContent = action;
-  byId('hero-link').href = current.href;
-  document.querySelector('.hero').dataset.slide = slide;
-  dots.forEach((dot, index) => {
-    dot.setAttribute('aria-label', slides[index][language][1].replace('\n', ' '));
-    if (index === slide) dot.setAttribute('aria-current', 'true');
-    else dot.removeAttribute('aria-current');
-  });
 }
 
 function renderAgenda() {
@@ -138,16 +99,18 @@ function renderCalendar() {
 
 function renderLanguage() {
   document.documentElement.lang = language === 'zh' ? 'zh-Hans' : 'fr';
-  document.title = language === 'zh' ? '巴黎报恩寺 · Temple Bao’en Paris' : 'Temple Bao’en Paris · 巴黎报恩寺';
+  const pageTitles = byId('main').dataset.title?.split('|');
+  document.title = pageTitles?.[language === 'zh' ? 0 : 1]
+    ?? (language === 'zh' ? '巴黎报恩寺 · Temple Bao’en Paris' : 'Temple Bao’en Paris · 巴黎报恩寺');
   document.querySelectorAll('[data-copy]').forEach((element) => {
     element.textContent = element.dataset.copy.split('|')[language === 'zh' ? 0 : 1];
   });
   localizedLabels.forEach(([selector, zh, fr]) => {
-    document.querySelector(selector).setAttribute('aria-label', language === 'zh' ? zh : fr);
+    document.querySelector(selector)?.setAttribute('aria-label', language === 'zh' ? zh : fr);
   });
   languageButtons.forEach((button) => button.setAttribute('aria-pressed', String(button.dataset.lang === language)));
-  renderSlide();
-  renderCalendar();
+  updateCarouselLanguage?.();
+  if (byId('calendar')) renderCalendar();
 }
 
 function closeNavigation() {
@@ -168,20 +131,6 @@ for (const button of languageButtons) {
   });
 }
 
-for (const dot of dots) {
-  dot.addEventListener('click', () => {
-    slide = Number(dot.dataset.slide);
-    renderSlide();
-  });
-}
-
-document.querySelectorAll('[data-step]').forEach((button) => {
-  button.addEventListener('click', () => {
-    slide = (slide + Number(button.dataset.step) + slides.length) % slides.length;
-    renderSlide();
-  });
-});
-
 document.querySelectorAll('[data-month]').forEach((button) => {
   button.addEventListener('click', () => {
     month = monthStart(month, Number(button.dataset.month));
@@ -190,7 +139,7 @@ document.querySelectorAll('[data-month]').forEach((button) => {
   });
 });
 
-byId('days').addEventListener('click', (event) => {
+byId('days')?.addEventListener('click', (event) => {
   const button = event.target.closest('[data-date]');
   if (!button) return;
   const previous = byId('days').querySelector('[aria-pressed="true"]');
@@ -232,5 +181,110 @@ document.addEventListener('keydown', (event) => {
   }
 });
 
-byId('year').textContent = today.getUTCFullYear();
+function initializeCarousel(track) {
+  const carousel = track.closest('.hero');
+  const play = byId('hero-play');
+  const heroDots = [...carousel.querySelectorAll('[data-hero-slide]')];
+  const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
+  const slideCount = track.children.length;
+  const firstSlide = track.firstElementChild.cloneNode();
+  firstSlide.removeAttribute('fetchpriority');
+  track.append(firstSlide);
+  track.prepend(track.children[slideCount - 1].cloneNode());
+  let currentSlide = 0;
+  let paused = reducedMotion.matches;
+  let slideAnimation;
+  let slideTimer;
+  let swipeStart;
+
+  function slidePosition(index) {
+    return `translateX(-${(index + 1) * 100}%)`;
+  }
+
+  function moveHero(step) {
+    if (slideAnimation) return;
+    const next = currentSlide + step;
+    const from = slidePosition(currentSlide);
+    const to = slidePosition(next);
+    currentSlide = (next + slideCount) % slideCount;
+    track.style.transform = slidePosition(currentSlide);
+    updateHeroDots();
+    if (reducedMotion.matches) return;
+    slideAnimation = track.animate([{ transform: from }, { transform: to }], {
+      duration: 550,
+      easing: 'ease-in-out',
+    });
+    slideAnimation.onfinish = () => { slideAnimation = undefined; };
+  }
+
+  function updatePlaybackLabel() {
+    play.setAttribute('aria-label', language === 'zh'
+      ? (paused ? '播放轮播' : '暂停轮播')
+      : (paused ? 'Lire le diaporama' : 'Mettre le diaporama en pause'));
+    play.dataset.paused = String(paused);
+    updateHeroDots();
+  }
+
+  function scheduleHero() {
+    clearInterval(slideTimer);
+    if (!paused && !document.hidden && !carousel.matches(':hover, :focus-within')) {
+      slideTimer = setInterval(() => moveHero(1), 4000);
+    }
+  }
+
+  function manualSlide(step) {
+    moveHero(step);
+    scheduleHero();
+  }
+
+  function updateHeroDots() {
+    heroDots.forEach((dot, index) => {
+      dot.setAttribute('aria-label', language === 'zh' ? `第 ${index + 1} 张照片` : `Photo ${index + 1}`);
+      if (index === currentSlide) dot.setAttribute('aria-current', 'true');
+      else dot.removeAttribute('aria-current');
+    });
+  }
+
+  heroDots.forEach((dot, index) => {
+    dot.addEventListener('click', () => {
+      if (index !== currentSlide) manualSlide(index - currentSlide);
+    });
+  });
+  play.addEventListener('click', () => {
+    paused = !paused;
+    updatePlaybackLabel();
+    scheduleHero();
+  });
+
+  carousel.addEventListener('pointerdown', (event) => {
+    if (!event.isPrimary || event.button !== 0 || event.target.closest('a, button')) return;
+    swipeStart = event;
+    carousel.setPointerCapture(event.pointerId);
+  });
+  carousel.addEventListener('pointerup', (event) => {
+    if (swipeStart?.pointerId !== event.pointerId) return;
+    const x = event.clientX - swipeStart.clientX;
+    const y = event.clientY - swipeStart.clientY;
+    swipeStart = undefined;
+    if (Math.abs(x) > 40 && Math.abs(x) > Math.abs(y)) manualSlide(x < 0 ? 1 : -1);
+  });
+  carousel.addEventListener('pointercancel', () => { swipeStart = undefined; });
+  carousel.addEventListener('mouseenter', scheduleHero);
+  carousel.addEventListener('mouseleave', scheduleHero);
+  carousel.addEventListener('focusin', scheduleHero);
+  carousel.addEventListener('focusout', () => setTimeout(scheduleHero, 0));
+  document.addEventListener('visibilitychange', scheduleHero);
+  reducedMotion.addEventListener('change', () => {
+    if (reducedMotion.matches) paused = true;
+    updatePlaybackLabel();
+    scheduleHero();
+  });
+
+  track.style.transform = slidePosition(currentSlide);
+  scheduleHero();
+  return updatePlaybackLabel;
+}
+
+const heroTrack = document.querySelector('.hero-track');
+const updateCarouselLanguage = heroTrack ? initializeCarousel(heroTrack) : null;
 renderLanguage();
